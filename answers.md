@@ -21,3 +21,20 @@ Joining paths does not create folders.
 Capitalization stays exactly as written.
 parent_path() returns the parent path.
 extension() returns only the extension, including the dot.
+## Exercise 2 — Lost newlines
+
+The bug happens because std::getline() removes each newline.
+Joining the lines produces "ab" instead of "a\nb\n".
+
+The fix reads the whole file without removing newlines:
+
+cpp
+std::string readAll(const std::filesystem::path& file) {
+    std::ifstream input(file, std::ios::binary);
+    std::ostringstream contents;
+    contents << input.rdbuf();
+    return contents.str();
+}
+
+
+This version requires #include <sstream>.
