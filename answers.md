@@ -38,3 +38,24 @@ std::string readAll(const std::filesystem::path& file) {
 
 
 This version requires #include <sstream>.
+
+## Exercise 3 — Two path mistakes
+
+The first mistake is joining strings instead of filesystem paths.
+Use root / ".minigit" for portable path joining.
+
+The second mistake is the leading slash in "/HEAD".
+Use "HEAD" so it stays inside the metadata directory.
+
+Corrected code:
+
+cpp
+std::filesystem::path metadataDirectory(
+    const std::filesystem::path& root) {
+    return root / ".minigit";
+}
+
+std::filesystem::path headFile(
+    const std::filesystem::path& root) {
+    return metadataDirectory(root) / "HEAD";
+}
