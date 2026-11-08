@@ -59,3 +59,20 @@ std::filesystem::path headFile(
     const std::filesystem::path& root) {
     return metadataDirectory(root) / "HEAD";
 }
+## Exercise 4 — Fill in the blanks
+
+cpp
+bool save(const std::filesystem::path& file,
+          const std::string& text) {
+    if (!file.parent_path().empty()) {
+        std::filesystem::create_directories(file.parent_path());
+    }
+
+    std::ofstream output(file);
+    if (!output) {
+        return false;
+    }
+
+    output << text;
+    return static_cast<bool>(output);
+}
